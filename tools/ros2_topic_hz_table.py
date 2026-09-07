@@ -16,7 +16,7 @@ from collections import deque
 import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy
-from rclpy.utilities import get_message  # type: ignore[attr-defined]
+from rosidl_runtime_py.utilities import get_message
 
 WINDOW = 50  # 주기 계산에 사용할 최근 샘플 수
 
