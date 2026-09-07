@@ -1,0 +1,20 @@
+name: shellcheck
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  shellcheck:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: shellcheck 설치
+        run: sudo apt-get update -qq && sudo apt-get install -y shellcheck
+
+      - name: setup 스크립트 검사
+        # error 등급만 실패로 처리한다. style/info 까지 막으면
+        # 설치 스크립트 특성상 통과시키기 어렵다.
+        run: shellcheck --severity=error --shell=bash setup/*.sh
