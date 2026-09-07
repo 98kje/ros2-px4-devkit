@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  FastDDS - UDP 유니캐스트 전용 프로파일
+
+  멀티캐스트가 차단된 네트워크(일부 사내망, VPN, 무선 브리지)에서는
+  기본 디스커버리가 동작하지 않습니다. 피어를 명시적으로 지정해 해결합니다.
+
+  사용법:
+    export FASTRTPS_DEFAULT_PROFILES_FILE=$PWD/config/fastdds-udp.xml
+    export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+-->
+<profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+  <participant profile_name="unicast_participant" is_default_profile="true">
+    <rtps>
+      <builtin>
+        <metatrafficUnicastLocatorList>
+          <locator>
+            <udpv4/>
+          </locator>
+        </metatrafficUnicastLocatorList>
+
+        <initialPeersList>
+          <!-- 통신할 상대 호스트를 모두 나열 (자기 자신 포함) -->
+          <locator>
+            <udpv4><address>127.0.0.1</address></udpv4>
+          </locator>
+          <locator>
+            <udpv4><address>192.168.0.10</address></udpv4>
+          </locator>
+        </initialPeersList>
+      </builtin>
+
+      <!-- 유니캐스트 전용이므로 멀티캐스트 비활성 -->
+      <useBuiltinTransports>false</useBuiltinTransports>
+      <userTransports>
+        <transport_id>udp_transport</transport_id>
+      </userTransports>
+    </rtps>
+  </participant>
+
+  <transport_descriptors>
+    <transport_descriptor>
+      <transport_id>udp_transport</transport_id>
+      <type>UDPv4</type>
+      <maxMessageSize>65000</maxMessageSize>
+      <sendBufferSize>1048576</sendBufferSize>
+      <receiveBufferSize>1048576</receiveBufferSize>
+    </transport_descriptor>
+  </transport_descriptors>
+</profiles>
