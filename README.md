@@ -14,6 +14,27 @@ ROS 2 Humble + PX4 / ArduPilot SITL 기반 드론 개발 환경을 빠르게 세
 | `docs/` | 치트시트 및 트러블슈팅 노트 |
 | `templates/` | ROS 2 패키지 스캐폴드 |
 
+## 수록 내용
+
+**설치 스크립트**
+
+- `setup/install_ros2_humble.sh` — ROS 2 Humble + rosdep
+- `setup/install_px4_sitl.sh` — PX4-Autopilot SITL
+- `setup/install_ardupilot_sitl.sh` — ArduPilot SITL
+- `setup/install_mavros.sh` — MAVROS + GeographicLib 데이터셋
+
+**진단 유틸리티**
+
+- `tools/ros2_topic_hz_table.py` — 다중 토픽 발행 주기를 한 표로
+- `tools/mavros_state_monitor.py` — 연결·아밍·모드·배터리 한 줄 모니터
+- `tools/param_diff.py` — 파라미터 덤프 비교 (.parm / .params)
+
+**문서**
+
+- `docs/cheatsheet-ros2.md` — ROS 2 CLI, QoS 불일치 조합표
+- `docs/cheatsheet-mavros.md` — MAVROS 토픽·서비스, OFFBOARD 진입 조건
+- `docs/troubleshooting.md` — 디스커버리·QoS·빌드 캐시 문제 해결
+
 ## 요구 환경
 
 - Ubuntu 22.04
