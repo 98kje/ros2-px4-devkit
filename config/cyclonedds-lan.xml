@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  CycloneDDS - 단일 LAN 인터페이스 고정 프로파일
+
+  멀티 NIC(유선 + WiFi + 도커 브리지) 환경에서 ROS 2 노드가 서로를 못 찾거나
+  간헐적으로 끊기는 문제 대부분은 디스커버리가 엉뚱한 인터페이스로 나가서 발생합니다.
+  NetworkInterfaceAddress 를 실제 사용할 NIC 로 고정하면 해결됩니다.
+
+  사용법:
+    export CYCLONEDDS_URI=file://$PWD/config/cyclonedds-lan.xml
+    export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+-->
+<CycloneDDS xmlns="https://cdds.io/config">
+  <Domain id="any">
+    <General>
+      <!-- 실제 NIC 이름으로 교체 (ip -br addr 로 확인) -->
+      <NetworkInterfaceAddress>eth0</NetworkInterfaceAddress>
+      <AllowMulticast>default</AllowMulticast>
+      <MaxMessageSize>65500B</MaxMessageSize>
+    </General>
+
+    <Internal>
+      <!-- 대용량 이미지/포인트클라우드 전송 시 버퍼 부족으로 인한 드롭 완화 -->
+      <SocketReceiveBufferSize min="10MB"/>
+      <Watermarks>
+        <WhcHigh>2MB</WhcHigh>
+      </Watermarks>
+    </Internal>
+
+    <Tracing>
+      <Verbosity>warning</Verbosity>
+      <OutputFile>stderr</OutputFile>
+    </Tracing>
+  </Domain>
+</CycloneDDS>
